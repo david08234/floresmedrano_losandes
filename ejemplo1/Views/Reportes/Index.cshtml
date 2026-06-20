@@ -94,7 +94,7 @@
                     <h3 class="shadcn-card-title mb-0">Ingresos Totales</h3>
                     <i class="bi bi-currency-dollar shadcn-icon"></i>
                 </div>
-                <div class="shadcn-metric">@Model.IngresosTotales.ToString("C")</div>
+                <div class="shadcn-metric">@Model.IngresosTotales.ToString("N2")</div>
             </div>
         </div>
 
@@ -161,7 +161,7 @@
                                         <div class="shadcn-subtext mt-0">@pedido.Estado.ToString()</div>
                                     </td>
                                     <td class="shadcn-subtext">@pedido.FechaPedido.ToString("dd/MM/yyyy")</td>
-                                    <td class="fw-medium text-end">@pedido.Total.ToString("C")</td>
+                                    <td class="fw-medium text-end">@pedido.Total.ToString("N2")</td>
                                 </tr>
                             }
                         }
