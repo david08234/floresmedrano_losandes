@@ -1,0 +1,249 @@
+﻿@model ejemplo1.Models.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard de Reportes";
+}
+
+<style>
+    .shadcn-bg {
+        background-color: #f8fafc;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .shadcn-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+    }
+
+    .shadcn-card-title {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #0f172a;
+        letter-spacing: -0.025em;
+    }
+
+    .shadcn-icon {
+        color: #64748b;
+        font-size: 1.25rem;
+    }
+
+    .shadcn-metric {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-top: 0.5rem;
+        letter-spacing: -0.025em;
+    }
+
+    .shadcn-subtext {
+        font-size: 0.75rem;
+        color: #64748b;
+        margin-top: 0.25rem;
+    }
+
+    .shadcn-table {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+        .shadcn-table th {
+            color: #64748b;
+            font-weight: 500;
+            font-size: 0.875rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .shadcn-table td {
+            padding: 1rem 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.875rem;
+            color: #0f172a;
+        }
+
+    .shadcn-badge {
+        background-color: #f1f5f9;
+        color: #0f172a;
+        padding: 0.25rem 0.5rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+</style>
+
+<div class="container-fluid shadcn-bg py-4 min-vh-100">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold" style="color: #0f172a; letter-spacing: -0.025em;">Dashboard</h2>
+            <p style="color: #64748b; font-size: 0.875rem; margin-bottom: 0;">Resumen general de ventas e inventario de Los Andes.</p>
+        </div>
+        <a asp-controller="Reportes" asp-action="ExportarExcel" class="btn btn-success rounded-pill px-4 shadow-sm fw-bold d-flex align-items-center gap-2" style="background-color: #10b981; border: none;">
+            <i class="bi bi-file-earmark-excel-fill fs-5"></i> Exportar a Excel
+        </a>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="shadcn-card h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="shadcn-card-title mb-0">Ingresos Totales</h3>
+                    <i class="bi bi-currency-dollar shadcn-icon"></i>
+                </div>
+                <div class="shadcn-metric">@Model.IngresosTotales.ToString("C")</div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="shadcn-card h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="shadcn-card-title mb-0">Ventas Realizadas</h3>
+                    <i class="bi bi-credit-card shadcn-icon"></i>
+                </div>
+                <div class="shadcn-metric">@Model.VentasRealizadas</div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="shadcn-card h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="shadcn-card-title mb-0">Stock Total</h3>
+                    <i class="bi bi-box-seam shadcn-icon"></i>
+                </div>
+                <div class="shadcn-metric">@Model.StockTotal</div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="shadcn-card h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="shadcn-card-title mb-0">Clientes Activos</h3>
+                    <i class="bi bi-people shadcn-icon"></i>
+                </div>
+                <div class="shadcn-metric">@Model.ClientesActivos</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-7">
+            <div class="shadcn-card h-100">
+                <h3 class="shadcn-card-title mb-4">Resumen de Ingresos</h3>
+                <div style="height: 300px; width: 100%; position: relative;">
+                    <canvas id="graficoIngresos"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="shadcn-card h-100">
+                <h3 class="shadcn-card-title mb-3">Ventas Recientes</h3>
+                <table class="shadcn-table">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th class="text-end">Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.VentasRecientes.Any())
+                        {
+                            @foreach (var pedido in Model.VentasRecientes)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="fw-medium">@pedido.Usuario?.Nombre</div>
+                                        <div class="shadcn-subtext mt-0">@pedido.Estado.ToString()</div>
+                                    </td>
+                                    <td class="shadcn-subtext">@pedido.FechaPedido.ToString("dd/MM/yyyy")</td>
+                                    <td class="fw-medium text-end">@pedido.Total.ToString("C")</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center shadcn-subtext">No hay ventas registradas aún.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cargar la librería Chart.js desde su CDN oficial -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Obtenemos el "lienzo" donde se dibujará el gráfico
+        var ctx = document.getElementById('graficoIngresos').getContext('2d');
+
+        // Aquí recibimos los datos reales desde el controlador (o usamos datos de prueba)
+        // Usamos Html.Raw para convertir las listas de C# a arreglos de JavaScript
+        var fechas = @Html.Raw(ViewBag.Fechas ?? "['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom']");
+        var montos = @Html.Raw(ViewBag.Montos ?? "[150, 300, 200, 600, 400, 800, 1200]");
+
+        var myChart = new Chart(ctx, {
+            type: 'line', // Tipo de gráfico (línea)
+            data: {
+                labels: fechas, // Las etiquetas de abajo (días/meses)
+                datasets: [{
+                    label: 'Ingresos (Bs)',
+                    data: montos, // Los valores del gráfico
+                    borderColor: '#0f172a', // Color de la línea (oscuro elegante)
+                    backgroundColor: 'rgba(15, 23, 42, 0.05)', // Relleno debajo de la línea
+                    borderWidth: 2,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#0f172a',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    fill: true,
+                    tension: 0.4 // Esto hace que la línea sea curva y suave
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false // Ocultamos la leyenda para mantenerlo limpio
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ' Bs ' + context.parsed.y.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#f1f5f9', // Color de las líneas de fondo
+                            drawBorder: false
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return 'Bs ' + value; // Agrega "Bs" a los números
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false // Ocultamos las líneas verticales para más limpieza
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>

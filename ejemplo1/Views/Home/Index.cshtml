@@ -1,0 +1,43 @@
+﻿    @{
+        ViewData["Title"] = "Inicio";
+    }
+
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card card-custom border-0 shadow-lg text-center p-4" style="border-radius: 1.5rem;">
+                    <div class="card-body">
+
+                        <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center p-3 mb-4 shadow-sm" style="width: 80px; height: 80px;">
+                            <i class="bi bi-emoji-smile-fill" style="font-size: 2.5rem; color: #667eea;"></i>
+                        </div>
+
+                        <h2 class="fw-bold text-dark mb-2">¡Hola, @ViewBag.NombreUsuario!</h2>
+                        <p class="text-muted mb-4">Has iniciado sesión correctamente.</p>
+
+                        <hr class="text-muted opacity-25 mb-4" />
+
+                        <a asp-controller="ProductosView" asp-action="Index" class="btn w-100 btn-lg rounded-pill fw-bold shadow-sm text-white mb-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; transition: transform 0.2s;">
+                            <i class="IrProductos"></i>Ir a Productos
+                        </a>
+
+                        <a asp-controller="Reportes" asp-action="Index" class="btn w-100 btn-lg rounded-pill fw-bold shadow-sm text-white mb-4" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%); border: none; transition: transform 0.2s;">
+                            <i class="dashboard"></i>Ver Dashboard
+                        </a>
+
+                        <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger w-100 rounded-pill fw-bold">
+                            <i class="bi bi-box-arrow-left me-1"></i>Cerrar Sesión
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Pequeño efecto para que los botones se levanten al pasar el mouse */
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+    </style>
