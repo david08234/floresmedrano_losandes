@@ -7,12 +7,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // ESTA ES LA LÍNEA QUE FALTABA
 var builder = WebApplication.CreateBuilder(args);
 
-// --- CONFIGURACIÓN de MONEDA ---
-var cultureInfo = new System.Globalization.CultureInfo("es-BO");
-cultureInfo.NumberFormat.CurrencySymbol = "Bs";
 
-System.Globalization.CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 // Se mantiene el soporte para tus vistas web (.cshtml)
 builder.Services.AddControllersWithViews();
