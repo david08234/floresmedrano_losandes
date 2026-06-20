@@ -7,8 +7,6 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // ESTA ES LA LÍNEA QUE FALTABA
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 // Se mantiene el soporte para tus vistas web (.cshtml)
 builder.Services.AddControllersWithViews();
 
