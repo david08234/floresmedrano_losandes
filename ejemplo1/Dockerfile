@@ -1,11 +1,11 @@
-﻿# Estructura base para ejecutar la app
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+﻿# Estructura base cambiada a Ubuntu Jammy para evitar el Error 139 en Render
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-jammy AS base
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-# Etapa de compilación
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# Etapa de compilación también en Jammy
+FROM mcr.microsoft.com/dotnet/sdk:8.0-jammy AS build
 WORKDIR /src
 COPY ["ejemplo1.csproj", "."]
 RUN dotnet restore "./ejemplo1.csproj"
