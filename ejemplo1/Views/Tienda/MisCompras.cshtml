@@ -57,8 +57,8 @@
                                                     <tr>
                                                         <td>@detalle.Producto?.Nombre</td>
                                                         <td>@detalle.Cantidad</td>
-                                                        <td>Bs Bs Bs @detalle.PrecioUnitario.ToString("N2")</td>
-                                                        <td>Bs Bs Bs @detalle.Subtotal.ToString("N2")</td>
+                                                        <td>Bs @detalle.PrecioUnitario.ToString("N2")</td>
+                                                        <td>Bs @detalle.Subtotal.ToString("N2")</td>
                                                     </tr>
                                                 }
                                             </tbody>
@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="bg-light p-3 rounded">
-                                        <p class="mb-1"><strong>Total:</strong>Bs Bs Bs @pedido.Total.ToString("N2")</p>
+                                        <p class="mb-1"><strong>Total:</strong> Bs @pedido.Total.ToString("N2")</p>
                                         <p class="mb-1"><strong>Envío:</strong> @pedido.DireccionEnvio</p>
                                         <p class="mb-0"><strong>Referencia:</strong> @pedido.NumeroReferencia</p>
                                     </div>

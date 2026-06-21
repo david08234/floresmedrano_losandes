@@ -71,7 +71,7 @@
                             <tr>
                                 <td colspan="3" class="text-end fw-bold fs-5 pt-4">Total:</td>
                                 <td class="text-end fw-bold fs-4 pt-4" style="color: #667eea;" id="total">
-                                    Bs Bs Bs @ViewBag.Total.ToString("N2")
+                                    Bs @ViewBag.Total.ToString("N2")
                                 </td>
                                 <td></td>
                             </tr>
@@ -119,9 +119,7 @@
 
     $(document).ready(function() {
 
-        // Variable para guardar temporalmente qué producto queremos borrar
         var productoAEliminarId = null;
-        // Inicializamos el Modal de Bootstrap
         var modalConfirmacion = new bootstrap.Modal(document.getElementById('modalEliminar'));
 
         function actualizarItem(itemId, nuevaCantidad) {
@@ -131,11 +129,11 @@
                         if (response.itemRemoved) {
                             actualizarCarrito();
                         } else {
-                            $(`.subtotal[data-id='${itemId}']`).text('Bs' + response.subtotal.toFixed(2));
-                            $('#total').text('Bs' + response.total.toFixed(2));
+                            // Se agregó un espacio después de Bs para que el diseño se mantenga al sumar/restar
+                            $(`.subtotal[data-id='${itemId}']`).text('Bs ' + response.subtotal.toFixed(2));
+                            $('#total').text('Bs ' + response.total.toFixed(2));
                         }
                     } else if (response.message) {
-                        // Cambiamos el alert() aquí por console.log o podrías usar un Toast a futuro
                         console.log(response.message);
                         actualizarCarrito();
                     }
@@ -164,20 +162,14 @@
             }
         });
 
-        // Cuando se hace clic en el basurero
         $('.btn-remove').click(function() {
-            // Guardamos el ID del producto
             productoAEliminarId = $(this).data('id');
-            // Mostramos el modal moderno
             modalConfirmacion.show();
         });
 
-        // Cuando se hace clic en "Sí, eliminar" dentro del Modal
         $('#btnConfirmarEliminar').click(function() {
             if (productoAEliminarId) {
-                // Ocultamos el modal
                 modalConfirmacion.hide();
-                // Mandamos a eliminar (cantidad 0)
                 actualizarItem(productoAEliminarId, 0);
             }
         });
