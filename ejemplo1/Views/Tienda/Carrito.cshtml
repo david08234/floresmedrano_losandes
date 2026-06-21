@@ -57,7 +57,7 @@
                                     </td>
                                     <td class="text-end text-muted">Bs @item.Producto?.Precio.ToString("N2")</td>
                                     <td class="text-end fw-bold text-primary subtotal" data-id="@item.Id">
-                                        @((item.Cantidad * (item.Producto?.Precio ?? 0)).ToString("N2"))
+                                        Bs @((item.Cantidad * (item.Producto?.Precio ?? 0)).ToString("N2"))
                                     </td>
                                     <td class="text-center">
                                         <button class="btn btn-sm btn-outline-danger btn-remove rounded-circle" data-id="@item.Id" title="Eliminar">
@@ -71,7 +71,7 @@
                             <tr>
                                 <td colspan="3" class="text-end fw-bold fs-5 pt-4">Total:</td>
                                 <td class="text-end fw-bold fs-4 pt-4" style="color: #667eea;" id="total">
-                                    @ViewBag.Total.ToString("N2")
+                                    Bs Bs Bs @ViewBag.Total.ToString("N2")
                                 </td>
                                 <td></td>
                             </tr>
