@@ -55,7 +55,7 @@
                                             <button class="btn btn-outline-secondary btn-plus" data-id="@item.Id">+</button>
                                         </div>
                                     </td>
-                                    <td class="text-end text-muted">@item.Producto?.Precio.ToString("N2")</td>
+                                    <td class="text-end text-muted">Bs @item.Producto?.Precio.ToString("N2")</td>
                                     <td class="text-end fw-bold text-primary subtotal" data-id="@item.Id">
                                         @((item.Cantidad * (item.Producto?.Precio ?? 0)).ToString("N2"))
                                     </td>
